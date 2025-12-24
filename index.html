@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Phygence — Physical Intelligence Engine for real-world decision systems." />
+  <title>Phygence — Physical Intelligence Engine</title>
+  <style>
+    :root{
+      --bg:#0B1220; --bg2:#0F172A; --card:#0E1A2F;
+      --text:#E5E7EB; --muted:#94A3B8; --line:rgba(148,163,184,.18);
+      --accent:#22D3EE; --shadow:0 12px 40px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(34,211,238,.10), transparent 60%),
+        radial-gradient(900px 500px at 90% 30%, rgba(34,211,238,.07), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1120px; margin:0 auto; padding:28px 18px 64px}
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0 18px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.4px}
+    .dot{
+      width:10px; height:10px; border-radius:999px; background:var(--accent);
+      box-shadow:0 0 18px rgba(34,211,238,.55);
+    }
+    .navlinks{display:flex; gap:14px; flex-wrap:wrap}
+    .navlinks a{color:var(--muted); font-size:14px}
+    .navlinks a:hover{color:var(--text)}
+    .hero{
+      margin-top:18px;
+      display:grid; gap:20px;
+      grid-template-columns: 1.2fr .8fr;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){ .hero{grid-template-columns: 1fr} }
+    .panel{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .heroLeft{padding:30px}
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      color:var(--muted); font-size:13px; letter-spacing:.7px; text-transform:uppercase;
+    }
+    .kicker span{width:36px; height:1px; background:var(--line)}
+    h1{margin:14px 0 10px; font-size:44px; line-height:1.05}
+    @media (max-width: 520px){ h1{font-size:36px} }
+    .sub{color:var(--muted); font-size:16px; line-height:1.55; max-width:60ch}
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:11px 14px; border-radius:14px;
+      border:1px solid var(--line);
+      color:var(--text); background:rgba(255,255,255,.02);
+      font-size:14px;
+    }
+    .btn:hover{border-color:rgba(34,211,238,.35)}
+    .btnPrimary{
+      background:rgba(34,211,238,.10);
+      border-color:rgba(34,211,238,.35);
+    }
+    .mini{
+      margin-top:18px; display:flex; gap:16px; flex-wrap:wrap;
+      color:var(--muted); font-size:13px;
+    }
+    .mini b{color:var(--text); font-weight:600}
+    .heroRight{padding:18px}
+    .diagram{
+      height:100%;
+      min-height:290px;
+      background:
+        radial-gradient(500px 240px at 50% 40%, rgba(34,211,238,.10), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border-radius: calc(var(--radius) - 6px);
+      border:1px solid var(--line);
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .grid{
+      position:absolute; inset:0;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 46px 46px;
+      opacity:.35;
+      pointer-events:none;
+      mask-image: radial-gradient(circle at 50% 35%, black 0%, transparent 70%);
+    }
+    .node{
+      position:absolute;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(14,26,47,.75);
+      backdrop-filter: blur(8px);
+      font-size:13px; color:var(--text);
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      white-space:nowrap;
+    }
+    .node small{display:block; color:var(--muted); font-size:12px; margin-top:2px}
+    .line{
+      position:absolute;
+      height:1px; background:rgba(34,211,238,.25);
+      transform-origin:left center;
+      box-shadow:0 0 14px rgba(34,211,238,.25);
+    }
+    .section{margin-top:20px}
+    .secHead{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    h2{margin:0; font-size:18px; letter-spacing:.3px}
+    .hint{color:var(--muted); font-size:13px}
+    .cards{
+      margin-top:12px;
+      display:grid; gap:12px;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+    }
+    @media (max-width: 900px){ .cards{grid-template-columns:1fr} }
+    .card{
+      padding:16px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:rgba(255,255,255,.02);
+    }
+    .cardTitle{display:flex; align-items:center; gap:10px; font-weight:650}
+    .pill{
+      font-size:12px; color:rgba(34,211,238,.95);
+      border:1px solid rgba(34,211,238,.25);
+      background:rgba(34,211,238,.06);
+      padding:3px 8px; border-radius:999px;
+    }
+    .card p{margin:10px 0 0; color:var(--muted); font-size:14px; line-height:1.55}
+    .footer{
+      margin-top:26px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      color:var(--muted); font-size:13px;
+      padding-top:14px; border-top:1px solid var(--line);
+    }
+    .anchor{scroll-margin-top:18px}
+    .nowrap{white-space:nowrap}
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <span>PHYGENCE</span>
+      </div>
+      <div class="navlinks">
+        <a href="#product">Product</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+        <a href="#contact" class="nowrap">Early Access</a>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="panel heroLeft">
+        <div class="kicker"><span></span>Physical Intelligence Engine</div>
+        <h1>Reasoning for real-world systems.</h1>
+        <div class="sub">
+          Phygence turns physical infrastructure into a structured intelligence layer — enabling safety-aware,
+          stakeholder-aware, explainable decisions for manufacturing, robotics, and autonomous systems.
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn btnPrimary" href="#contact">Request Early Access →</a>
+          <a class="btn" href="#architecture">See Architecture</a>
+        </div>
+
+        <div class="mini">
+          <div><b>Core:</b> TCAS + Omnia</div>
+          <div><b>Focus:</b> Decision intelligence</div>
+          <div><b>Output:</b> Explainable actions</div>
+        </div>
+      </div>
+
+      <div class="panel heroRight">
+        <div class="diagram" aria-label="Architecture diagram">
+          <div class="grid"></div>
+
+          <!-- Nodes -->
+          <div class="node" style="left:18px; top:26px;">
+            Physical System
+            <small>Assets • Sensors • Controls</small>
+          </div>
+
+          <div class="node" style="right:18px; top:78px;">
+            Stakeholders
+            <small>Owner • User • Maintenance</small>
+          </div>
+
+          <div class="node" style="left:50%; top:124px; transform:translateX(-50%); border-color:rgba(34,211,238,.35);">
+            TCAS Structure
+            <small>Metrics • Dependents • Logic</small>
+          </div>
+
+          <div class="node" style="left:18px; bottom:38px;">
+            Omnia Reasoning
+            <small>5 layers of intelligence</small>
+          </div>
+
+          <div class="node" style="right:18px; bottom:48px;">
+            Decisions
+            <small>Explainable • Real-time</small>
+          </div>
+
+          <!-- Lines -->
+          <div class="line" style="left:150px; top:56px; width:280px; transform:rotate(18deg);"></div>
+          <div class="line" style="left:360px; top:150px; width:250px; transform:rotate(12deg);"></div>
+          <div class="line" style="left:140px; top:222px; width:300px; transform:rotate(-12deg);"></div>
+          <div class="line" style="left:480px; top:238px; width:240px; transform:rotate(-18deg);"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section anchor" id="product">
+      <div class="secHead">
+        <h2>What Phygence does</h2>
+        <div class="hint">Not a chatbot. A reasoning layer for physical operations.</div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="cardTitle"><span class="pill">STRUCTURE</span>Model your infrastructure</div>
+          <p>Build TCAS-based representations of assets, signals, constraints, and stakeholders — like a digital “reasoning blueprint.”</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle"><span class="pill">REASON</span>Compute decision logic</div>
+          <p>Generate decisions from performance metrics (quality, safety, productivity, maintenance, cost) and dependent stakeholders.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle"><span class="pill">EXPLAIN</span>Make it auditable</div>
+          <p>Every action can be traced back to the structure + rules + priorities — enabling trust, compliance, and repeatability.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section anchor" id="architecture">
+      <div class="secHead">
+        <h2>Architecture</h2>
+        <div class="hint">TCAS (structure) + Omnia (reasoning)</div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="cardTitle"><span class="pill">TCAS</span>Analytical Structure</div>
+          <p>Organisation → Infrastructure → Division → Subdivision, with assets and stakeholders mapped into a decision-ready model.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle"><span class="pill">OMNIA</span>5-layer Intelligence</div>
+          <p>Layered reasoning inspired by natural intelligence — designed for real-time, physical-world decision execution.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle"><span class="pill">API</span>Integrate with LLM/UI</div>
+          <p>Use conversational UI for inputs, but keep decision logic grounded in the structured model for reliable output.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section anchor" id="usecases">
+      <div class="secHead">
+        <h2>Use cases</h2>
+        <div class="hint">Start with manufacturing decision co-pilot; expand to robotics & autonomy.</div>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="cardTitle"><span class="pill">MFG</span>Decision Co-Pilot</div>
+          <p>Shift decisions, downtime response, quality deviations, maintenance prioritization — with stakeholder-aware reasoning.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle"><span class="pill">LEAK</span>Leak Testing Intelligence</div>
+          <p>Structured logic for test sequences, compensation models, thresholds, traceability, and explainability.</p>
+        </div>
+        <div class="card">
+          <div class="cardTitle"><span class="pill">ROBOTS</span>Physical AI Actions</div>
+          <p>Decision-action flows for collaborative robots and autonomous machines with safety-first constraints.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section anchor" id="contact">
+      <div class="secHead">
+        <h2>Early access</h2>
+        <div class="hint">Add your email here later, or link a Google Form.</div>
+      </div>
+      <div class="card">
+        <div class="cardTitle"><span class="pill">CONTACT</span>Reach out</div>
+        <p>
+          Email: <a href="mailto:contact@phygence.com">contact@phygence.com</a><br/>
+          Or replace this block with a Google Form link for pilot requests.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>© <span id="y"></span> Phygence</div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="#product">Product</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#usecases">Use Cases</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
